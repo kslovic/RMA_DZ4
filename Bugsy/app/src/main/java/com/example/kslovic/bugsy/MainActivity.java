@@ -38,10 +38,9 @@ public class MainActivity extends Activity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         String searchTerm = this.etSearchTerm.getText().toString();
-        this.findNews(searchTerm);
-    }
-    private void findNews(String searchTerm) {
-
+        ArrayList<News> selectedNews = NewsDBHelper.getInstance(this).getNews(searchTerm);
+        adapter = new NewsAdapter(selectedNews);
+        this.lvNews.setAdapter(adapter);
     }
     public void displayNews(ArrayList<News> news){
         this.bSearch.setEnabled(true);

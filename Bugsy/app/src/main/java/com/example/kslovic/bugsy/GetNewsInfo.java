@@ -15,7 +15,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
-public class GetNewsInfo extends AsyncTask<Void,Void,ArrayList<News>> {
+public class GetNewsInfo extends AsyncTask<Void,Void,Void> {
     private static final String TAG = "Kristina";
     private MainActivity mActivity;
     URL url;
@@ -28,16 +28,15 @@ public class GetNewsInfo extends AsyncTask<Void,Void,ArrayList<News>> {
         super.onPreExecute();
     }
     @Override
-    protected ArrayList<News> doInBackground(Void... params) {
+    protected Void doInBackground(Void... params) {
         Document document = retrieveNewsInfo();
         if(document!=null) {
-            ArrayList<News> news= new ArrayList<>();
-            String title="", pubDate="", category="", description="", imageUrl="", link="";
+            String title = "", pubDate = "", category = "", description = "", imageUrl = "", link = "";
             Element root = document.getDocumentElement();
             Node channel = root.getFirstChild();
-            Log.d("TAG",channel.getTextContent());
+            Log.d("TAG", channel.getTextContent());
             NodeList items = channel.getChildNodes();
-            for(int i=0; i<items.getLength();i++) {
+            for (int i = 0; i < items.getLength(); i++) {
                 Node current = items.item(i);
                 if (current.getNodeName().equalsIgnoreCase("item")) {
                     NodeList itemChilds = current.getChildNodes();
@@ -63,12 +62,11 @@ public class GetNewsInfo extends AsyncTask<Void,Void,ArrayList<News>> {
                         }
                     }
                     News newsItem = new News(title, pubDate, category, description, imageUrl, link);
-                    news.add(newsItem);
+                    NewsDBHelper.getInstance(this.mActivity).insertNews(newsItem);
                 }
             }
-            return news;
         }
-        else return null;
+        return null;
     }
 
     private Document retrieveNewsInfo(){
@@ -91,9 +89,10 @@ public class GetNewsInfo extends AsyncTask<Void,Void,ArrayList<News>> {
         Log.d(TAG,data.getDocumentElement().getNodeName());
     }
     @Override
-    protected void onPostExecute(ArrayList<News> news) {
-        super.onPostExecute(news);
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
         if(this.mActivity != null){
+            ArrayList<News> news= NewsDBHelper.getInstance(this.mActivity).getAllNews();
             this.mActivity.displayNews(news);
         }
     }
