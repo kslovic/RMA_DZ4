@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/ivNewsPoster"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+    <TextView
+        android:id="@+id/tvNewsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNewsPoster"
+        android:textSize="15sp"/>
+    <TextView
+        android:id="@+id/tvNewsPubDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNewsPoster"
+        android:layout_below="@id/tvNewsTitle"
+        android:textSize="10sp"/>
+    <TextView
+        android:id="@+id/tvNewsCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNewsPoster"
+        android:layout_below="@id/tvNewsPubDate"
+        android:textSize="10sp"/>
+    <TextView
+        android:id="@+id/tvNewsDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivNewsPoster"
+        android:layout_below="@id/tvNewsCategory"
+        android:textSize="10sp"/>
+</RelativeLayout>
