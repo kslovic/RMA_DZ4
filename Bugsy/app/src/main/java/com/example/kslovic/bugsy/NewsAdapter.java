@@ -22,7 +22,7 @@ public class NewsAdapter extends BaseAdapter {
             return this.mNews.size();
         }
         @Override
-        public Object getItem(int position) {
+        public News getItem(int position) {
             return this.mNews.get(position);
         }
         @Override

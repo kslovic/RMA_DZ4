@@ -1,8 +1,11 @@
 package com.example.kslovic.bugsy;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -14,6 +17,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     EditText etSearchTerm;
     ImageButton bSearch;
     ListView lvNews;
+    NewsAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +45,21 @@ public class MainActivity extends Activity implements View.OnClickListener
     }
     public void displayNews(ArrayList<News> news){
         this.bSearch.setEnabled(true);
-        NewsAdapter adapter = new NewsAdapter(news);
+        adapter = new NewsAdapter(news);
         this.lvNews.setAdapter(adapter);
+        this.lvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                News newsItem = adapter.getItem(position);
+                String link = newsItem.getLink();
+                Intent implicitIntent;
+                implicitIntent = new Intent();
+                Uri uri = Uri.parse(link);
+                implicitIntent.setData(uri);
+                implicitIntent.setAction(Intent.ACTION_VIEW);
+                startActivity(implicitIntent);
+            }
+        });
     }
 
 }
