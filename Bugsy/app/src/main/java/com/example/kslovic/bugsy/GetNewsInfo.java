@@ -31,6 +31,7 @@ public class GetNewsInfo extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         Document document = retrieveNewsInfo();
         if(document!=null) {
+            NewsDBHelper.getInstance(this.mActivity).deleteAll();
             String title = "", pubDate = "", category = "", description = "", imageUrl = "", link = "";
             Element root = document.getDocumentElement();
             Node channel = root.getFirstChild();

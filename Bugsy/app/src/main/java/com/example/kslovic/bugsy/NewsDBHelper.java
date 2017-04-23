@@ -47,7 +47,7 @@ public class NewsDBHelper extends SQLiteOpenHelper {
         writeableDatabase.close();
     }
     public ArrayList<News> getNews(String etCategory) {
-        String SELECT_NEWS = "SELECT * FROM " + Schema.TABLE_MY_NEWS + " WHERE " + Schema.CATEGORY + "=" + "'" + etCategory + "'";
+        String SELECT_NEWS = "SELECT * FROM " + Schema.TABLE_MY_NEWS + " WHERE " + Schema.CATEGORY + " LIKE " + "'%" + etCategory + "%'";
         SQLiteDatabase writeableDatabase = this.getWritableDatabase();
         Cursor newsCursor = writeableDatabase.rawQuery(SELECT_NEWS,null);
         ArrayList<News> news = new ArrayList<>();
@@ -84,6 +84,10 @@ public class NewsDBHelper extends SQLiteOpenHelper {
         newsCursor.close();
         writeableDatabase.close();
         return news;
+    }
+    public void deleteAll(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Schema.TABLE_MY_NEWS, null, null);
     }
     public static class Schema{
         private static final int SCHEMA_VERSION = 1;
