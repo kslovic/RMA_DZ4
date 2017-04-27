@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class NewsDBHelper extends SQLiteOpenHelper {
-    // Singleton
+
     private static NewsDBHelper mNewsDBHelper = null;
     private NewsDBHelper (Context context){
         super(context.getApplicationContext(),Schema.DATABASE_NAME,null,Schema.SCHEMA_VERSION);
@@ -92,7 +92,7 @@ public class NewsDBHelper extends SQLiteOpenHelper {
     public static class Schema{
         private static final int SCHEMA_VERSION = 1;
         private static final String DATABASE_NAME = "news.db";
-        //A table to store owned books:
+
         static final String TABLE_MY_NEWS = "my_news";
         static final String TITLE = "title";
         static final String PUBDATE = "pubDate";

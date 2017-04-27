@@ -86,9 +86,6 @@ public class GetNewsInfo extends AsyncTask<Void,Void,Void> {
         }
 
     }
-    private void loadNews(Document data){
-        Log.d(TAG,data.getDocumentElement().getNodeName());
-    }
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);

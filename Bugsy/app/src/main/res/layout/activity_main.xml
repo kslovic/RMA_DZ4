@@ -10,16 +10,17 @@
         android:layout_alignParentTop="true"
         android:hint="@string/selcategory"
        />
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/etSearchTerm">
+
     <ListView
         android:id="@+id/lvNews"
-        android:layout_below="@id/etSearchTerm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
-    <Button
-        android:id="@+id/bRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/refresh"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

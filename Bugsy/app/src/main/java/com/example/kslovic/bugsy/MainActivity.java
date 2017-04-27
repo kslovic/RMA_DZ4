@@ -5,26 +5,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity {
     EditText etSearchTerm;
     ListView lvNews;
     NewsAdapter adapter;
     Context context;
-    Button bRefresh;
+    private SwipeRefreshLayout swipeContainer;
+    public MainActivity activity = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity = this;
         this.context=getApplicationContext();
         this.setUpUi();
         GetNewsInfo getNews = new GetNewsInfo(this);
@@ -33,10 +36,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void setUpUi() {
         this.etSearchTerm = (EditText) this.findViewById(R.id.etSearchTerm);
         this.lvNews = (ListView) this.findViewById(R.id.lvNews);
-        this.bRefresh = (Button) this.findViewById(R.id.bRefresh);
         etSearchTerm.addTextChangedListener(watcher);
-        bRefresh.setOnClickListener(this);
-    }
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                GetNewsInfo refreshNews = new GetNewsInfo(activity);
+                refreshNews.execute();
+               swipeContainer.setRefreshing(false);
+
+            }
+        });
+        }
     private final TextWatcher watcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -72,9 +83,4 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        ArrayList<News> news= NewsDBHelper.getInstance(this).getAllNews();
-        this.displayNews(news);
-    }
 }
